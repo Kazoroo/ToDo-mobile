@@ -4,37 +4,37 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.kazoroo.todo.data.TasksData.tasksData
 import pl.kazoroo.todo.ui.theme.LightGray100
 import pl.kazoroo.todo.ui.theme.Typography
 
 @Composable
-fun TodoScreen()
-{
+fun TodoScreen(modifier: Modifier = Modifier, todoViewModel: TodoViewModel = viewModel()) {
+    val todoUiState by todoViewModel.uiState.collectAsState()
+
     TaskColumn()
 
     Row(
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.Bottom)
-    {
-        IconButton(onClick = { /*TODO*/ })
-        {
+            horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.Bottom
+    ) {
+        IconButton(onClick = { /*TODO*/ }) {
             Icon(
                     imageVector = Icons.Default.AddCircle,
                     contentDescription = "Add task button",
