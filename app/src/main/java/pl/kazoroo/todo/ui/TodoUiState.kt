@@ -1,3 +1,3 @@
 package pl.kazoroo.todo.ui
 
-data class TodoUiState(val title: String = "hej")
+data class TodoUiState(val title: String = "")
