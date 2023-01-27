@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pl.kazoroo.todo.data.TasksData.tasksData
@@ -28,7 +29,7 @@ import pl.kazoroo.todo.ui.theme.Typography
 fun TodoScreen(modifier: Modifier = Modifier, todoViewModel: TodoViewModel = viewModel()) {
     val TodoUiState by todoViewModel.uiState.collectAsState()
 
-    TaskColumn(TodoUiState.title)
+    TaskColumn()
 
     Row(
             horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.Bottom
@@ -41,10 +42,12 @@ fun TodoScreen(modifier: Modifier = Modifier, todoViewModel: TodoViewModel = vie
                     tint = Color.Gray)
         }
     }
+
+
 }
 
 @Composable
-fun TaskColumnItem(title: String, description: String, date: String) {
+private fun TaskColumnItem(title: String, description: String, date: String) {
     Card(
             elevation = 4.dp,
             modifier = Modifier
@@ -53,7 +56,7 @@ fun TaskColumnItem(title: String, description: String, date: String) {
                 .fillMaxWidth()
     ) {
 
-        Column(Modifier.wrapContentWidth()) {
+        Column(Modifier.width(48.dp), horizontalAlignment = Alignment.Start) {
             Text(
                     text = title, modifier = Modifier.padding(
                     start = 28.dp
@@ -68,7 +71,7 @@ fun TaskColumnItem(title: String, description: String, date: String) {
         }
 
 
-        Column(horizontalAlignment = Alignment.End) {
+        Column(horizontalAlignment = Alignment.End, modifier = Modifier.width(10.dp)) {
             Text(
                     text = date, style = Typography.subtitle1
             )  //dates
@@ -78,17 +81,28 @@ fun TaskColumnItem(title: String, description: String, date: String) {
             }
 
             IconButton(onClick = { /*TODO*/ }) {
-                Icon(imageVector = Icons.Default.Delete, contentDescription = "Delete button", tint = Color.Red)
+                Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete button",
+                        tint = Color.Red
+                )
             }
         }
     }
 }
 
 @Composable
-private fun TaskColumn(title: String) {
+private fun TaskColumn() {
     LazyColumn(modifier = Modifier.background(color = LightGray100)) {
         items(tasksData) {
             TaskColumnItem(title = it.title, description = it.description, date = it.date)
         }
     }
 }
+
+@Preview
+@Composable
+private fun ColumnPrev() {
+    TaskColumn()
+}
+
